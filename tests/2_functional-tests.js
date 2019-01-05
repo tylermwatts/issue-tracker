@@ -90,10 +90,9 @@ suite('Functional Tests', function() {
       
       test('One field to update', function(done) {
         chai.request(server)
-          .post('/api/issues/test')
-          .send({
-            
-          })
+          .route('/api/issues/test')
+          .put()
+          .send(
       });
       
       test('Multiple fields to update', function(done) {
