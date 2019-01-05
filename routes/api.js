@@ -33,16 +33,16 @@ module.exports = function (app) {
   MongoClient.connect(CONNECTION_STRING, function(err, db) {
     if (err) {
       console.log("Database connection error");
-    } else {
-      console.log("Database connection successful");
+    }
+      console.log("Database connection successful")
       app.route('/api/issues/:project')
-  
         .get(function (req, res){
           var project = req.params.project;
           
         })
     
         .post(function (req, res){
+          console.log("post")
           var newIssue = new Issue({
             project: req.params.project,
             issue_title: req.body.issue_title,
@@ -51,11 +51,13 @@ module.exports = function (app) {
             assigned_to: req.body.assigned_to,
             status_text: req.body.status_text
           })
+          console.log(newIssue);
           newIssue.save((err,data)=>{
             if (err) {
-              return res.json(err)
+              return res.send(err)
             }
-            return res.json(data);
+            console.log(data)
+            res.json(data);
           })
         })
     
@@ -68,5 +70,5 @@ module.exports = function (app) {
           var project = req.params.project;
       
         });
-    }})
+    })
 };
