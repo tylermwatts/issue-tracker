@@ -42,29 +42,24 @@ module.exports = function (app) {
           console.log("post")
           Issue.findOne({issue_title: req.body.issue_title}, (err,issue) => {
             if (err) return res.json(err);
-            if (issue) {
-              return res.json({error: "An issue with this title already exists!"})
-            } else {
-            
-            }
-          }
-          var newIssue = new Issue({
-            project: req.params.project,
-            issue_title: req.body.issue_title,
-            issue_text: req.body.issue_text,
-            created_by: req.body.created_by,
-            assigned_to: req.body.assigned_to,
-            status_text: req.body.status_text
+            var newIssue = new Issue({
+              project: req.params.project,
+              issue_title: req.body.issue_title,
+              issue_text: req.body.issue_text,
+              created_by: req.body.created_by,
+              assigned_to: req.body.assigned_to,
+              status_text: req.body.status_text
+            })
+            console.log(newIssue);
+            newIssue.save((err,data)=>{
+              if (err) {
+                return res.send(err)
+              }
+              console.log(data)
+              res.json(data);
+            })
           })
-          console.log(newIssue);
-          newIssue.save((err,data)=>{
-            if (err) {
-              return res.send(err)
-            }
-            console.log(data)
-            res.json(data);
-          })
-        })
+      })
     
         .put(function (req, res){
           var project = req.params.project;
