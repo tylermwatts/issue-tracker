@@ -40,6 +40,9 @@ module.exports = function (app) {
         })
         .post(function (req, res){
           console.log("post")
+          if (!req.body.issue_title || !req.body.issue_text || !req.body.created_by){
+            return res.json({error: "Missing required information!"}).redirect("/")
+          }
             var newIssue = new Issue({
               project: req.params.project,
               issue_title: req.body.issue_title,
