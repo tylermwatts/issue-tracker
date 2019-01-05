@@ -64,10 +64,12 @@ module.exports = function (app) {
     
         .put(function (req, res){
           var project = req.params.project;
+          
           if (req.body._id === null){
             return res.json({error: "_id is required to update issue."})
           }
           Issue.findOneAndUpdate({_id: req.body._id}, (err, issue) => {
+            issue.
           })
         })
     

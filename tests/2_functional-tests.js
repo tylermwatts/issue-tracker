@@ -92,7 +92,15 @@ suite('Functional Tests', function() {
         chai.request(server)
           .route('/api/issues/test')
           .put()
-          .send(
+          .send({
+            _id: "5c30ee60b4fdad041af070af",
+            status_text: "updating status text"
+          })
+          .end(function(err,res) {
+            assert.equal(res.status, 200);
+            assert.equal(res.body.updateMessage, "successfully updated");
+            done();
+          })
       });
       
       test('Multiple fields to update', function(done) {
