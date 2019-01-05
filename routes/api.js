@@ -30,19 +30,24 @@ const issueSchema = new mongoose.Schema({
 const Issue = mongoose.model('Issue', issueSchema);
 
 module.exports = function (app) {
-  MongoClient.connect(CONNECTION_STRING, function(err, db) {
-    if (err) {
-      console.log("Database connection error");
-    }
-      console.log("Database connection successful")
       app.route('/api/issues/:project')
         .get(function (req, res){
           var project = req.params.project;
-          
+          Issue.find({project}, (err,arr)=>{
+            if (err) return res.send(err)
+            res.json(arr);
+          })
         })
-    
         .post(function (req, res){
           console.log("post")
+          Issue.findOne({issue_title: req.body.issue_title}, (err,issue) => {
+            if (err) return res.json(err);
+            if (issue) {
+              return res.json({error: "An issue with this title already exists!"})
+            } else {
+            
+            }
+          }
           var newIssue = new Issue({
             project: req.params.project,
             issue_title: req.body.issue_title,
@@ -70,5 +75,4 @@ module.exports = function (app) {
           var project = req.params.project;
       
         });
-    })
-};
+    };
