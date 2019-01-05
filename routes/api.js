@@ -30,7 +30,10 @@ module.exports = function (app) {
     
         .post(function (req, res){
           var project = req.params.project;
-          
+          db.collection("issues").insertOne({
+            issue_title: req.body.issue_title,
+            
+          }
         })
     
         .put(function (req, res){
