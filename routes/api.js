@@ -69,8 +69,13 @@ module.exports = function (app) {
             return res.json({error: "_id is required to update issue."})
           }
           Issue.findOneAndUpdate({_id: req.body._id}, (err, issue) => {
-            issue.
+            issue.issue_title = req.body.issue_title,
+            issue.issue_text = req.body.issue_text,
+            issue.created_by = req.body.created_by,
+            issue.assigned_to = req.body.assigned_to,
+            issue.status_text = req.body.status_text
           })
+          res.json({updateMessage: "successfully updated"});
         })
     
         .delete(function (req, res){
