@@ -40,19 +40,21 @@ suite('Functional Tests', function() {
       
       test('Required fields filled in', function(done) {
         chai.request(server)
-          .post('/api/issues/test')
-          .send({
-            issue_title: 'Title',
-            issue_text: 'test text',
-            created_by: 'Some User'
-          })
-          .end(function(err, res){
-            assert.equal(res.status,200);
-            assert.isDefined(res.body.issue_title);
-            assert.isDefined(res.body.issue_text);
-            assert.isDefined(res.body.created_by);
-            done();
-          })
+        .post('/api/issues/test')
+        .send({
+          issue_title: 'Title',
+          issue_text: 'text',
+          created_by: 'Functional Test - Every field filled in'
+        })
+        .end(function(err, res){
+          assert.equal(res.status, 200);
+          assert.isDefined(res.body.issue_title);
+          assert.isDefined(res.body.issue_text);
+          assert.isDefined(res.body.created_by);
+          assert.isDefined(res.body.created_on);
+          assert.isTrue(res.body.open);
+          done();
+        });
       });
       
       test('Missing required fields', function(done) {
