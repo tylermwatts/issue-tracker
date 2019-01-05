@@ -11,9 +11,19 @@
 var expect = require('chai').expect;
 var MongoClient = require('mongodb');
 var ObjectId = require('mongodb').ObjectID;
+var mongoose = require('mongoose');
 
 const CONNECTION_STRING = process.env.DB; //MongoClient.connect(CONNECTION_STRING, function(err, db) {});
 
+const issueSchema = new mongoose.Schema({
+  project: {type: String, required: true},
+  issue_title: {type: String, required: true},
+  issue_text: {type: String, required: true},
+  created_by: {type: String, required: true},
+  assigned_to: {type: String, required: false},
+  status_text: {type: String, required: false},
+  created_on: {type: Date, default
+})
 
 module.exports = function (app) {
   MongoClient.connect(CONNECTION_STRING, function(err, db) {
@@ -30,13 +40,7 @@ module.exports = function (app) {
     
         .post(function (req, res){
           var project = req.params.project;
-          db.collection("issues").insertOne({
-            issue_title: req.body.issue_title,
-            issue_text: req.body.issue_text,
-            created_by: req.body.created_by,
-            assigned_to: req.body.assigned_to,
-            status_text: req.body.status_text
-          }).then(issue => console.log(issue))
+          
         })
     
         .put(function (req, res){
