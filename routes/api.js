@@ -28,7 +28,12 @@ module.exports = function (app) {
           db.collection("projects").findOne({project}, (err, project) => {
             if (err) return res.json({error: err});
             if (!project){
-              db.collection(
+              db.collection("projects").insertOne({
+                project, issues: [{issue_title: req.body.issue_title}]
+              }, (err, doc)=>{
+                if (err) return res.json({error: err})
+                res.json(doc);
+              })
             }
           })
         })
