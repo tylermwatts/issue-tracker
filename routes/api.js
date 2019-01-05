@@ -22,8 +22,12 @@ const issueSchema = new mongoose.Schema({
   created_by: {type: String, required: true},
   assigned_to: {type: String, required: false},
   status_text: {type: String, required: false},
-  created_on: {type: Date, default
+  created_on: {type: Date, default: new Date()},
+  updated_on: {type: Date},
+  open: {type: Boolean, default: true}
 })
+
+const Issue = mongoose.model('Issue', issueSchema);
 
 module.exports = function (app) {
   MongoClient.connect(CONNECTION_STRING, function(err, db) {
@@ -40,7 +44,11 @@ module.exports = function (app) {
     
         .post(function (req, res){
           var project = req.params.project;
-          
+          Issue.findOne({issue_title: req.params.issue_title}, (err, issue) => {
+            if (err) {
+              res.status(
+            }
+          })
         })
     
         .put(function (req, res){
