@@ -66,6 +66,7 @@ suite('Functional Tests', function() {
             created_by: null
           })
           .end((err,res) => {
+            assert.equal(res.status, 200);
             assert.equal(res.body.error, "Missing required information!")
             done();
           }); 
@@ -75,7 +76,16 @@ suite('Functional Tests', function() {
     suite('PUT /api/issues/{project} => text', function() {
       
       test('No body', function(done) {
-        
+        chai.request(server)
+          .post('/api/issues/test')
+          .send({
+            _id: null
+          })
+          .end(function(err,res){
+            assert.equal(res.status, 200);
+            assert.equal(res.body.error, "_id is required to update issue.");
+            done();
+          })
       });
       
       test('One field to update', function(done) {
