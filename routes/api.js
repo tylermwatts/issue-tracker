@@ -64,7 +64,12 @@ module.exports = function (app) {
     
         .put(function (req, res){
           var project = req.params.project;
-      
+          Issue.findOne({_id: req.body._id}, (err, issue) => {
+            if (err) return res.json(err)
+            if (!issue){
+              return res.json({error: "_id is required to update issue."})
+            }
+          })
         })
     
         .delete(function (req, res){
