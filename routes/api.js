@@ -46,7 +46,20 @@ module.exports = function (app) {
           var project = req.params.project;
           Issue.findOne({issue_title: req.params.issue_title}, (err, issue) => {
             if (err) {
-              res.status(
+              return res.status(500).json(err)
+            }
+            if (issue){
+              return res.json({error: "issue already exists with this title!"})
+            } else {
+              var newIssue = new Issue({
+                project: project,
+                issue_title: req.body.issue_title,
+                issue_text: req.body.issue_text,
+                created_by: req.body.created_by,
+                assigned_to: req.body.assigned_to,
+                status_text: req.body.status_text
+              })
+              
             }
           })
         })
