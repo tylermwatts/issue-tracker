@@ -20,8 +20,8 @@ const issueSchema = new mongoose.Schema({
   issue_title: {type: String, required: true},
   issue_text: {type: String, required: true},
   created_by: {type: String, required: true},
-  assigned_to: {type: String, required: false},
-  status_text: {type: String, required: false},
+  assigned_to: {type: String, required: true, default: ""},
+  status_text: {type: String, required: true, default: ""},
   created_on: {type: Date, default: new Date()},
   updated_on: {type: Date},
   open: {type: Boolean, default: true}
@@ -40,8 +40,6 @@ module.exports = function (app) {
         })
         .post(function (req, res){
           console.log("post")
-          Issue.findOne({issue_title: req.body.issue_title}, (err,issue) => {
-            if (err) return res.json(err);
             var newIssue = new Issue({
               project: req.params.project,
               issue_title: req.body.issue_title,
@@ -58,8 +56,8 @@ module.exports = function (app) {
               console.log(data)
               res.json(data);
             })
+            
           })
-      })
     
         .put(function (req, res){
           var project = req.params.project;

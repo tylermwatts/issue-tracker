@@ -51,8 +51,6 @@ suite('Functional Tests', function() {
             assert.isDefined(res.body.issue_title);
             assert.isDefined(res.body.issue_text);
             assert.isDefined(res.body.created_by);
-            assert.isNull(res.body.assigned_to);
-            assert.isNull(res.body.status_text);
             done();
           })
       });
