@@ -25,7 +25,12 @@ module.exports = function (app) {
   
         .get(function (req, res){
           var project = req.params.project;
-      
+          db.collection("projects").findOne({project}, (err, project) => {
+            if (err) return res.json({error: err});
+            if (!project){
+              db.collection(
+            }
+          })
         })
     
         .post(function (req, res){
