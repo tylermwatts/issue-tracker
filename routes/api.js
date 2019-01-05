@@ -36,13 +36,7 @@ module.exports = function (app) {
             created_by: req.body.created_by,
             assigned_to: req.body.assigned_to,
             status_text: req.body.status_text
-          }, (err, issue) => {
-            if (err){
-              return res.json(err)
-            }
-            console.log(issue);
-            res.json(issue);
-          })
+          }).then(issue => console.log(issue))
         })
     
         .put(function (req, res){
