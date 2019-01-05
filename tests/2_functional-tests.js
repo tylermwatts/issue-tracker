@@ -77,7 +77,7 @@ suite('Functional Tests', function() {
       
       test('No body', function(done) {
         chai.request(server)
-          .post('/api/issues/test')
+          .put('/api/issues/test')
           .send({
             _id: null
           })
@@ -89,7 +89,11 @@ suite('Functional Tests', function() {
       });
       
       test('One field to update', function(done) {
-        
+        chai.request(server)
+          .post('/api/issues/test')
+          .send({
+            
+          })
       });
       
       test('Multiple fields to update', function(done) {
