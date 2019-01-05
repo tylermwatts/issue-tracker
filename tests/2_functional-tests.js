@@ -58,10 +58,19 @@ suite('Functional Tests', function() {
       });
       
       test('Missing required fields', function(done) {
-        
+        chai.request(server)
+          .post('/api/issues/test')
+          .send({
+            issue_title: null,
+            issue_text: null,
+            created_by: null
+          })
+          .end((err,res) => {
+            assert.equal(res.body.error, "Missing required information!")
+            done();
+          }); 
       });
-      
-    });
+    })
     
     suite('PUT /api/issues/{project} => text', function() {
       
