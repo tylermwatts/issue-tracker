@@ -29,17 +29,32 @@ suite('Functional Tests', function() {
         })
         .end(function(err, res){
           assert.equal(res.status, 200);
-          assert.equal(res.body.issue_title, 'Title');
-          assert.equal(res.body.issue_text, 'text');
-          assert.equal(res.body.created_by, 'Functional Test - Every field filled in');
-          assert.equal(res.body.assigned_to, 'Chai and Mocha');
-          assert.equal(res.body.status_text, 'In QA');          
+          assert.isDefined(res.body.issue_title);
+          assert.isDefined(res.body.issue_text);
+          assert.isDefined(res.body.created_by);
+          assert.isDefined(res.body.assigned_to);
+          assert.isDefined(res.body.status_text);          
           done();
         });
       });
       
       test('Required fields filled in', function(done) {
-        
+        chai.request(server)
+          .post('/api/issues/test')
+          .send({
+            issue_title: 'Title',
+            issue_text: 'test text',
+            created_by: 'Some User'
+          })
+          .end(function(err, res){
+            assert.equal(res.status,200);
+            assert.isDefined(res.body.issue_title);
+            assert.isDefined(res.body.issue_text);
+            assert.isDefined(res.body.created_by);
+            assert.isNull(res.body.assigned_to);
+            assert.isNull(res.body.status_text);
+            done();
+          })
       });
       
       test('Missing required fields', function(done) {
