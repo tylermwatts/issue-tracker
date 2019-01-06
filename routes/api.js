@@ -70,13 +70,12 @@ module.exports = function (app) {
           if (req.body._id === null){
             return res.json({error: "_id is required to update issue."})
           }
-          var updateFields = req.body
           
-          if (Object.keys(updateFields).length === 1 && updateFields._id){
+          if (Object.keys(req.body).length === 1 && req.body._id){
             return res.json({error: "no update field sent"});
           }
         
-          Issue.findOneAndUpdate({_id: req.body._id}, updateFields, {new: true}, (err, issue) => {
+          Issue.findByIdAndUpdate(req.body._id, req.body, {new: true}, (err, issue) => {
             if (err) return res.json({error: err})
             if (!issue) return res.json({error: "could not update " + req.body._id})
             res.json({updateMessage: 'successfully updated'});
@@ -85,6 +84,7 @@ module.exports = function (app) {
     
         .delete(function (req, res){
           var project = req.params.project;
-          
+          if (!req.body._id){return res.json({error: '_id error'})}
+          Issue.findByIdAndDelete()
         });
     };
