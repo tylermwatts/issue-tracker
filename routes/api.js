@@ -63,19 +63,29 @@ module.exports = function (app) {
           })
     
         .put(function (req, res){
+          console.log("put");
           var project = req.params.project;
-          
           if (req.body._id === null){
             return res.json({error: "_id is required to update issue."})
           }
-          Issue.findOneAndUpdate({_id: req.body._id}, {
-            project: project,
-            issue_title: req.body.issue_title,
-            issue_text: req.body.issue_text,
-            created_by: req.body.created_by,
-            assigned_to: req.body.assigned_to,
-            status_text: req.body.status_text
-          }, (err, issue) => {
+          var updateFields = {project: project}
+          if (req.body.issue_title){
+            updateFields.issue_title = req.body.issue_title;
+          }
+          if (req.body.issue_text){
+            updateFields.issue_text = req.body.issue_text;
+          }
+          if (req.body.created_by){
+            updateFields.created_by = req.body.created_by;
+          }
+          if (req.body.assigned_to){
+            updateFields.assigned_to = req.body.assigned_to;
+          }
+          if (req.body.status_text){
+            updateFields.status_text = req.body.status_text;
+          }
+          Issue.findOneAndUpdate({_id: req.body._id}, updateFields, {new: true}, (err, issue) => {
+            console.log(issue);
             if (err) return res.json({error: err})
             res.json({updateMessage: 'successfully updated'});
           })

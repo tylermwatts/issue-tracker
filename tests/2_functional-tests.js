@@ -90,8 +90,7 @@ suite('Functional Tests', function() {
       
       test('One field to update', function(done) {
         chai.request(server)
-          .route('/api/issues/test')
-          .put()
+          .put('/api/issues/test')
           .send({
             _id: "5c30ee60b4fdad041af070af",
             status_text: "updating status text"
