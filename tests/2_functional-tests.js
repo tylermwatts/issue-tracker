@@ -143,7 +143,13 @@ suite('Functional Tests', function() {
       });
       
       test('One filter', function(done) {
-        
+        chai.request(server)
+          .get('/api/issues/test')
+          .query({created_by: 'test'})
+          .end(function(err, res){
+            assert.equal(res.status, 200);
+            done();
+        })
       });
       
       test('Multiple filters (test for multiple fields you know will be in the db for a return)', function(done) {
