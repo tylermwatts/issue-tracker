@@ -145,17 +145,24 @@ suite('Functional Tests', function() {
       test('One filter', function(done) {
         chai.request(server)
           .get('/api/issues/test')
-          .query({created_by: 'test'})
+          .query({issue_text: 'text'})
           .end(function(err, res){
             assert.equal(res.status, 200);
             assert.isArray(res.body);
-            assert.
+            assert.isTrue(res.body.every(d=>d.issue_text == 'text'));
             done();
         })
       });
       
       test('Multiple filters (test for multiple fields you know will be in the db for a return)', function(done) {
-        
+        chai.request(server)
+          .get('/api/issues/test')
+          .query({open: true, issue_title: 'Title', created_by: 'Functional Test - Every field filled in'})
+          .end((err,res)=>{
+            assert.equal(res.status, 200);
+            
+            done();
+          })
       });
       
     });
