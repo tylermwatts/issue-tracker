@@ -160,7 +160,10 @@ suite('Functional Tests', function() {
           .query({open: true, issue_title: 'Title', created_by: 'Functional Test - Every field filled in'})
           .end((err,res)=>{
             assert.equal(res.status, 200);
-            
+            assert.isArray(res.body);
+            assert.isTrue(res.body.every(d=>d.open === true));
+            assert.isTrue(res.body.every(d=>d.issue_title === 'Title'));
+            assert.isTrue(res.body.every(d=>d.created_by === 'Functional Test - Every field filled in'));
             done();
           })
       });
@@ -170,7 +173,14 @@ suite('Functional Tests', function() {
     suite('DELETE /api/issues/{project} => text', function() {
       
       test('No _id', function(done) {
-        
+        chai.request(server)
+          .delete('/api/issues/test')
+          .query({})
+          .end((err,res)=>{
+            assert.equal(res.status, 200);
+            assert.equal(res.body.error, '_id error');
+            done();
+          })
       });
       
       test('Valid _id', function(done) {
