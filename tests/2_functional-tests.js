@@ -184,6 +184,7 @@ suite('Functional Tests', function() {
       });
       
       test('Valid _id', function(done) {
+        let firstIssue = chai.request(server).get('/api/issues/test').query({}).end((err,res)=>{})
         chai.request(server)
           .delete('/api/issues/test')
           .query({_id: ""})
