@@ -185,13 +185,10 @@ suite('Functional Tests', function() {
       
       test('Valid _id', function(done) {
           chai.request(server)
-          .get('/api/issues/test')
-          .query({})
-          .end((err,res)=>{
-            console.log(res.locals)
+          .delete('/api/issues/test', (req,res)=>{
+            req.firstIssue = res.body[0]._id;
+            console.log(req.firstIssue)
           })
-        chai.request(server)
-          .delete('/api/issues/test')
           .query({_id: ''})
           .end((err,res)=>{
             assert.equal(res.status, 200);
