@@ -185,9 +185,7 @@ suite('Functional Tests', function() {
       
       test('Valid _id', function(done) {
           chai.request(server)
-          .delete('/api/issues/test',(req,res)=>{
-            
-          })
+          .delete('/api/issues/test')
           .query({_id: ''})
           .end((err,res)=>{
             assert.equal(res.status, 200);
