@@ -148,6 +148,8 @@ suite('Functional Tests', function() {
           .query({created_by: 'test'})
           .end(function(err, res){
             assert.equal(res.status, 200);
+            assert.isArray(res.body);
+            assert.
             done();
         })
       });
