@@ -92,7 +92,7 @@ suite('Functional Tests', function() {
         chai.request(server)
           .put('/api/issues/test')
           .send({
-            _id: "5c32297952efb31ea1ffbc6c",
+            _id: "5c322fe218b95c49000cd278",
             status_text: "updating status text"
           })
           .end(function(err,res) {
@@ -106,7 +106,7 @@ suite('Functional Tests', function() {
         chai.request(server)
           .put('/api/issues/test')
           .send({
-            _id: "5c32297952efb31ea1ffbc6c",
+            _id: "5c322fe218b95c49000cd278",
             status_text: "multiple field test update",
             assigned_to: "multi-field test",
             issue_text: "testing tha tmultiple fields can be updated"

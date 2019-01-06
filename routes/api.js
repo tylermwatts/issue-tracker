@@ -52,7 +52,8 @@ module.exports = function (app) {
               issue_text: req.body.issue_text,
               created_by: req.body.created_by,
               assigned_to: req.body.assigned_to,
-              status_text: req.body.status_text
+              status_text: req.body.status_text,
+              updated_on: new Date()
             })
             console.log(newIssue);
             newIssue.save((err,data)=>{
