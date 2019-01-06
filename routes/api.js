@@ -68,7 +68,9 @@ module.exports = function (app) {
           if (req.body._id === null){
             return res.json({error: "_id is required to update issue."})
           }
-          var updateFields = {project: project}
+        
+          var updateFields = {project: project, updated_on: new Date()}
+          
           if (req.body.issue_title){
             updateFields.issue_title = req.body.issue_title;
           }
@@ -84,9 +86,16 @@ module.exports = function (app) {
           if (req.body.status_text){
             updateFields.status_text = req.body.status_text;
           }
+          
+          if (Object.keys(updateFields).length == 2){
+            
+          }
+        
           Issue.findOneAndUpdate({_id: req.body._id}, updateFields, {new: true}, (err, issue) => {
             console.log(issue);
             if (err) return res.json({error: err})
+            if (!issue) return res.json({error: "could not update " + req.body._id})
+            if (updateFields
             res.json({updateMessage: 'successfully updated'});
           })
         })

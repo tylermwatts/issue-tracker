@@ -92,7 +92,7 @@ suite('Functional Tests', function() {
         chai.request(server)
           .put('/api/issues/test')
           .send({
-            _id: "5c30ee60b4fdad041af070af",
+            _id: "5c32297952efb31ea1ffbc6c",
             status_text: "updating status text"
           })
           .end(function(err,res) {
@@ -103,7 +103,19 @@ suite('Functional Tests', function() {
       });
       
       test('Multiple fields to update', function(done) {
-        
+        chai.request(server)
+          .put('/api/issues/test')
+          .send({
+            _id: "5c32297952efb31ea1ffbc6c",
+            status_text: "multiple field test update",
+            assigned_to: "multi-field test",
+            issue_text: "testing tha tmultiple fields can be updated"
+          })
+          .end((err,res)=>{
+            assert.equal(res.status, 200);
+            assert.equal(res.body.updateMessage, "successfully updated");
+            done();
+          })
       });
       
     });
