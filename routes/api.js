@@ -74,6 +74,7 @@ module.exports = function (app) {
           }
         
           var updateFields = {project: project, updated_on: new Date()}
+          var updateFields = Object.entries(req.body).map((d,i)=>
           
           if (req.body.issue_title){
             updateFields.issue_title = req.body.issue_title;
