@@ -33,8 +33,11 @@ module.exports = function (app) {
       app.route('/api/issues/:project')
         .get(function (req, res){
           var project = req.params.project;
-          Issue.find({project}, (err,arr)=>{
+          var query = req.query;
+          query.project = project;
+          Issue.find(query, (err,arr)=>{
             if (err) return res.send(err)
+            console.log(arr)
             res.json(arr);
           })
         })
@@ -87,15 +90,14 @@ module.exports = function (app) {
             updateFields.status_text = req.body.status_text;
           }
           
-          if (Object.keys(updateFields).length == 2){
-            
+          if (Object.keys(updateFields).length === 2){
+            return res.json({error: "no update field sent"});
           }
         
           Issue.findOneAndUpdate({_id: req.body._id}, updateFields, {new: true}, (err, issue) => {
             console.log(issue);
             if (err) return res.json({error: err})
             if (!issue) return res.json({error: "could not update " + req.body._id})
-            if (updateFields
             res.json({updateMessage: 'successfully updated'});
           })
         })
