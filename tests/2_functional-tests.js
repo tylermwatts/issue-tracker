@@ -109,7 +109,7 @@ suite('Functional Tests', function() {
             _id: "5c3231529200224b7acbd9b8",
             status_text: "multiple field test update",
             assigned_to: "multi-field test",
-            issue_text: "testing tha tmultiple fields can be updated"
+            issue_text: "testing that multiple fields can be updated"
           })
           .end((err,res)=>{
             assert.equal(res.status, 200);

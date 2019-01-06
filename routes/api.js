@@ -32,12 +32,12 @@ const Issue = mongoose.model('Issue', issueSchema);
 module.exports = function (app) {
       app.route('/api/issues/:project')
         .get(function (req, res){
+          console.log('get');
           var project = req.params.project;
           var query = req.query;
           query.project = project;
           Issue.find(query, (err,arr)=>{
             if (err) return res.send(err)
-            console.log(arr)
             res.json(arr);
           })
         })
@@ -55,12 +55,10 @@ module.exports = function (app) {
               status_text: req.body.status_text,
               updated_on: new Date()
             })
-            console.log(newIssue);
             newIssue.save((err,data)=>{
               if (err) {
                 return res.send(err)
               }
-              console.log(data)
               res.json(data);
             })
             
@@ -72,32 +70,13 @@ module.exports = function (app) {
           if (req.body._id === null){
             return res.json({error: "_id is required to update issue."})
           }
-        
-          var updateFields = {project: project, updated_on: new Date()}
-          var updateFields = Object.entries(req.body).map((d,i)=>
+          var updateFields = req.body
           
-          if (req.body.issue_title){
-            updateFields.issue_title = req.body.issue_title;
-          }
-          if (req.body.issue_text){
-            updateFields.issue_text = req.body.issue_text;
-          }
-          if (req.body.created_by){
-            updateFields.created_by = req.body.created_by;
-          }
-          if (req.body.assigned_to){
-            updateFields.assigned_to = req.body.assigned_to;
-          }
-          if (req.body.status_text){
-            updateFields.status_text = req.body.status_text;
-          }
-          
-          if (Object.keys(updateFields).length === 2){
+          if (Object.keys(updateFields).length === 1 && updateFields._id){
             return res.json({error: "no update field sent"});
           }
         
           Issue.findOneAndUpdate({_id: req.body._id}, updateFields, {new: true}, (err, issue) => {
-            console.log(issue);
             if (err) return res.json({error: err})
             if (!issue) return res.json({error: "could not update " + req.body._id})
             res.json({updateMessage: 'successfully updated'});
@@ -106,6 +85,6 @@ module.exports = function (app) {
     
         .delete(function (req, res){
           var project = req.params.project;
-      
+          
         });
     };
