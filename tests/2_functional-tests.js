@@ -189,7 +189,7 @@ suite('Functional Tests', function() {
           .query({_id: ""})
           .end((err,res)=>{
             assert.equal(res.status, 200);
-            assert.equal(res.body.
+            assert.equal(res.body.success, 'deleted ');
             done();
           })
       });
