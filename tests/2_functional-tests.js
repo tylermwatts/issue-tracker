@@ -187,19 +187,19 @@ suite('Functional Tests', function() {
         chai.request(server)
           .post('/api/issues/test')
           .send({
-            issue_title: 'Valid ID Delete',
-            issue_text: 'Testing delete function with valid _id',
+            issue_title: 'Delete Test',
+            issue_text: 'testing delete with valid _id',
             created_by: 'test suite'
           })
-          .then((err,res)=>{
+          .end(function(err,res){
             chai.request(server)
               .delete('/api/issues/test')
               .query({_id: res.body._id})
-              .end((err,res)=>{
-                assert.equal(res.status, 200);
-                assert.equal(res.body.success, 'deleted ' + res.body._id)
+              .end(function(err,res){
+                assert.equal(
               })
           })
+        
       });
       
     });
