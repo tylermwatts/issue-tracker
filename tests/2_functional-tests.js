@@ -184,26 +184,21 @@ suite('Functional Tests', function() {
       });
       
       test('Valid _id', function(done) {
-        var testIssueId;
         chai.request(server)
           .post('/api/issues/test')
           .send({
-            issue_title: 'Delete test',
-            issue_text: 'Tests delete function',
+            issue_title: 'Valid ID Delete',
+            issue_text: 'Testing delete function with valid _id',
             created_by: 'test suite'
           })
-          .exec((err,res)=>{
-            testIssueId = res.body[0]._id;
-            done();
-          })
-          
-        chai.request(server)
-          .delete('/api/issues/test')
-          .query({_id: testIssueId})
-          .end((err,res)=>{
-            assert.equal(res.status, 200);
-            assert.equal(res.body.success, 'deleted ' + testIssueId);
-            done();
+          .then((err,res)=>{
+            chai.request(server)
+              .delete('/api/issues/test')
+              .query({_id: res.body._id})
+              .end((err,res)=>{
+                assert.equal(res.status, 200);
+                assert.equal(res.body.success, 'deleted ' + res.body._id)
+              })
           })
       });
       
