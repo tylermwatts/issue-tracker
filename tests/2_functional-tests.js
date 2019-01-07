@@ -192,11 +192,15 @@ suite('Functional Tests', function() {
             created_by: 'test suite'
           })
           .end(function(err,res){
+            var query = res.body._id;
             chai.request(server)
               .delete('/api/issues/test')
-              .query({_id: res.body._id})
+              .send({_id: query})
               .end(function(err,res){
-                assert.equal(
+                assert.equal(res.status, 200);
+                assert.equal(res.body.success, 'deleted ' + query);
+                console.log(res.body);
+                done();
               })
           })
         
