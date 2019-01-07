@@ -72,9 +72,9 @@ module.exports = function (app) {
           }
           
           if (Object.keys(req.body).length === 1 && req.body._id){
-            return res.json({error: "no update field sent"});
+            return res.json({error: "no updated field sent"});
           }
-        
+          req.body.updated_on = new Date();
           Issue.findByIdAndUpdate(req.body._id, req.body, {new: true}, (err, issue) => {
             if (err) return res.json({error: err})
             if (!issue) return res.json({error: "could not update " + req.body._id})
